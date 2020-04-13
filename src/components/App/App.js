@@ -31,6 +31,22 @@ class App extends React.Component {
     );
   };
 
+  clickDeleteButton = (event, taskId) => {
+    console.log("Delete Button Clicked: ", taskId);
+    // delete task
+    axios({
+      method: "DELETE",
+      url: `/tasks/${taskId}`,
+    })
+      .then((response) => {
+        console.log("Server DELETE Response: ", response.data);
+        this.getTasks();
+      })
+      .catch((error) => {
+        console.log(`DELETE ERROR: ${error}`);
+      });
+  };
+
   clickCompleteButton = (event, taskId) => {
     console.log("Complete Button Clicked: ", taskId);
     // put/update complete status
@@ -46,6 +62,7 @@ class App extends React.Component {
         console.log(`PUT ERROR: ${error}`);
       });
   };
+
   clickAddButton = (event, newTask) => {
     console.log("Clicked Added Button: ", this.state.newTask);
     // post task to server
@@ -91,6 +108,7 @@ class App extends React.Component {
         <TaskList
           taskList={this.state.taskList}
           clickCompleteButton={this.clickCompleteButton}
+          clickDeleteButton={this.clickDeleteButton}
         />
       </div>
     );

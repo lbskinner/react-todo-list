@@ -11,7 +11,11 @@ class TaskList extends React.Component {
           >
             Complete
           </button>
-          <button>Delete</button>
+          <button
+            onClick={(event) => this.props.clickDeleteButton(event, task.id)}
+          >
+            Delete
+          </button>
         </div>
       );
     });
