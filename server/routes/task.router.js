@@ -38,7 +38,7 @@ router.put("/:id", (req, res) => {
   const updatedTaskData = req.body;
   const queryText = `UPDATE "tasks" SET "completed" = $1 WHERE "id" = $2;`;
   pool
-    .query(queryText, [updatedTaskData.completed, taskId])
+    .query(queryText, [true, taskId])
     .then((responseFromDb) => {
       res.sendStatus(200); // OK
     })

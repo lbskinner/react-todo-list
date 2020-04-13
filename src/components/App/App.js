@@ -31,9 +31,24 @@ class App extends React.Component {
     );
   };
 
+  clickCompleteButton = (event, taskId) => {
+    console.log("Complete Button Clicked: ", taskId);
+    // put/update complete status
+    axios({
+      method: "PUT",
+      url: `/tasks/${taskId}`,
+    })
+      .then((response) => {
+        console.log("Server PUT Response: ", response.date);
+        this.getTasks();
+      })
+      .catch((error) => {
+        console.log(`PUT ERROR: ${error}`);
+      });
+  };
   clickAddButton = (event, newTask) => {
     console.log("Clicked Added Button: ", this.state.newTask);
-
+    // post task to server
     axios({
       method: "POST",
       url: "/tasks",
@@ -63,6 +78,7 @@ class App extends React.Component {
         console.log(`GET ERROR: ${error}`);
       });
   }
+
   render() {
     return (
       <div>
@@ -72,7 +88,10 @@ class App extends React.Component {
           enterNewTask={this.enterNewTask}
           clickAddButton={this.clickAddButton}
         />
-        <TaskList taskList={this.state.taskList} />
+        <TaskList
+          taskList={this.state.taskList}
+          clickCompleteButton={this.clickCompleteButton}
+        />
       </div>
     );
   }

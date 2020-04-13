@@ -6,7 +6,11 @@ class TaskList extends React.Component {
       return (
         <div key={index}>
           <p>{task.task}</p>
-          <button>Complete</button>
+          <button
+            onClick={(event) => this.props.clickCompleteButton(event, task.id)}
+          >
+            Complete
+          </button>
           <button>Delete</button>
         </div>
       );
