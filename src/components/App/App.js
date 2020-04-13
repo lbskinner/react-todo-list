@@ -7,6 +7,9 @@ import TaskList from "../TaskLits/TaskList";
 
 class App extends React.Component {
   state = {
+    newTask: {
+      task: "",
+    },
     taskList: [],
   };
 
@@ -15,13 +18,43 @@ class App extends React.Component {
     this.getTasks();
   }
 
+  enterNewTask = (event) => {
+    this.setState(
+      {
+        newTask: {
+          task: event.target.value,
+        },
+      },
+      () => {
+        console.log(this.state.newTask);
+      }
+    );
+  };
+
+  clickAddButton = (event, newTask) => {
+    console.log("Clicked Added Button: ", this.state.newTask);
+
+    axios({
+      method: "POST",
+      url: "/tasks",
+      data: newTask,
+    })
+      .then((response) => {
+        console.log("Server POST Response: ", response.data);
+        this.getTasks();
+      })
+      .catch((error) => {
+        console.log(`POST ERROR: ${error}`);
+      });
+  };
+
   getTasks() {
     axios({
       method: "GET",
       url: "/tasks",
     })
       .then((response) => {
-        console.log(`Server GET Response: ${response.data}`);
+        console.log("Server GET Response: ", response.data);
         this.setState({
           taskList: [...response.data],
         });
@@ -34,7 +67,11 @@ class App extends React.Component {
     return (
       <div>
         <Header />
-        <TaskForm />
+        <TaskForm
+          newTask={this.state.newTask}
+          enterNewTask={this.enterNewTask}
+          clickAddButton={this.clickAddButton}
+        />
         <TaskList taskList={this.state.taskList} />
       </div>
     );

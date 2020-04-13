@@ -5,8 +5,18 @@ class TaskForm extends React.Component {
     return (
       <div>
         <label>New Task:</label>
-        <input type="text" placeholder="Enter New Task" />
-        <button>Add New Task</button>
+        <input
+          type="text"
+          placeholder="Enter New Task"
+          onChange={this.props.enterNewTask}
+        />
+        <button
+          onClick={(event) =>
+            this.props.clickAddButton(event, this.props.newTask)
+          }
+        >
+          Add New Task
+        </button>
       </div>
     );
   }
