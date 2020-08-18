@@ -1,3 +1,3 @@
 React-TODO List
 
-A full stack project for me to practice react.
+Created a full stack to do list to practice react in 2 hours.
